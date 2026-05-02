@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>竹笋大会 2026 · 剪辑团队 Onboarding</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f2eb;
+    --surface: #ffffff;
+    --surface2: #faf8f3;
+    --border: #e0d9cc;
+    --accent: #2d5a27;
+    --accent2: #8b6914;
+    --accent3: #c84b31;
+    --text: #1a1a14;
+    --text-muted: #6b6555;
+    --text-dim: #b0a898;
+    --gold: #c9a227;
+    --complete: #2d5a27;
+    --bamboo: #4a7c3f;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans SC', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* grain texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    position: relative;
+    padding: 60px 48px 48px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    overflow: hidden;
+  }
+
+  .header::after {
+    content: '竹';
+    position: absolute;
+    right: -20px;
+    top: -40px;
+    font-size: 280px;
+    font-weight: 900;
+    color: var(--accent);
+    opacity: 0.04;
+    line-height: 1;
+    pointer-events: none;
+    font-family: 'Noto Sans SC';
+  }
+
+  .header-tag {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent3);
+    background: #fef0ec;
+    border: 1px solid #f5c5b8;
+    padding: 4px 12px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+
+  .header h1 {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+
+  .header h1 span {
+    color: var(--accent);
+  }
+
+  .header-sub {
+    margin-top: 12px;
+    font-size: 15px;
+    color: var(--text-muted);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .meta-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+
+  .meta-value {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  /* ── PROGRESS BAR ── */
+  .progress-section {
+    padding: 24px 48px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(8px);
+  }
+
+  .progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .progress-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .btn-reset {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    background: none;
+    border: 1px solid var(--border);
+    padding: 4px 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .btn-reset:hover { color: var(--accent3); border-color: var(--accent3); background: #fef0ec; }
+
+  .progress-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .progress-count {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .progress-bar-bg {
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--gold));
+    border-radius: 2px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 0%;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 48px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── SECTION HEADER ── */
+  .section-intro {
+    margin-bottom: 40px;
+    padding: 28px 32px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 4px;
+  }
+
+  .section-intro h2 {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-transform: uppercase;
+    font-family: 'Space Mono', monospace;
+    margin-bottom: 10px;
+  }
+
+  .section-intro p {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--text-muted);
+  }
+
+  .deliverable-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .chip {
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+  }
+
+  .chip-green { background: #e8f4e8; color: var(--accent); border: 1px solid #c5e0c5; }
+  .chip-gold { background: #fef6e0; color: var(--accent2); border: 1px solid #f0dfa0; }
+  .chip-red { background: #fef0ec; color: var(--accent3); border: 1px solid #f5c5b8; }
+
+  /* ── STEP CARD ── */
+  .steps-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .step-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: box-shadow 0.2s, border-color 0.2s;
+    cursor: pointer;
+  }
+
+  .step-card:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    border-color: #ccc5b5;
+  }
+
+  .step-card.completed {
+    border-color: #c5e0c5;
+    background: #fafff9;
+  }
+
+  .step-card.completed .step-number {
+    background: var(--complete);
+    color: white;
+  }
+
+  .step-card.completed .step-title {
+    color: var(--text-dim);
+    text-decoration: line-through;
+    text-decoration-color: #b0d0b0;
+  }
+
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+  }
+
+  .step-checkbox {
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+    background: white;
+  }
+
+  .step-card.completed .step-checkbox {
+    background: var(--complete);
+    border-color: var(--complete);
+  }
+
+  .checkmark {
+    display: none;
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .step-card.completed .checkmark { display: block; }
+
+  .step-number {
+    width: 32px;
+    height: 32px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+
+  .step-content {
+    flex: 1;
+  }
+
+  .step-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+    transition: color 0.2s;
+  }
+
+  .step-subtitle {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 300;
+  }
+
+  .step-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .btn-guide {
+    font-size: 11px;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.08em;
+    color: var(--accent2);
+    background: #fef6e0;
+    border: 1px solid #f0dfa0;
+    padding: 5px 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+
+  .btn-guide:hover {
+    background: #fdefc0;
+    border-color: var(--gold);
+  }
+
+  .expand-icon {
+    color: var(--text-dim);
+    font-size: 18px;
+    transition: transform 0.2s;
+    user-select: none;
+  }
+
+  /* ── EXPAND PANEL ── */
+  .step-panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+    opacity: 0;
+    border-top: 0px solid var(--border);
+  }
+
+  .step-panel.open {
+    max-height: 1200px;
+    opacity: 1;
+    border-top: 1px solid var(--border);
+  }
+
+  .panel-body {
+    padding: 24px 24px 28px 72px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .panel-section-title {
+    font-size: 10px;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .modal-steps-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .modal-steps-list li {
+    display: flex;
+    gap: 12px;
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--text);
+  }
+
+  .modal-steps-list li::before {
+    content: attr(data-n);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--accent);
+    background: #e8f4e8;
+    border-radius: 3px;
+    padding: 2px 7px;
+    height: fit-content;
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+
+  .warning-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .warning-list li {
+    display: flex;
+    gap: 10px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    background: #fef8f0;
+    border: 1px solid #f5e8c8;
+    border-radius: 4px;
+    padding: 9px 13px;
+  }
+
+  .warning-list li::before {
+    content: '⚠';
+    font-size: 12px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .tip-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .tip-list li {
+    display: flex;
+    gap: 10px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    background: #f0f7f0;
+    border: 1px solid #c5e0c5;
+    border-radius: 4px;
+    padding: 9px 13px;
+  }
+
+  .tip-list li::before {
+    content: '💡';
+    font-size: 12px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .deliverable-box {
+    background: linear-gradient(135deg, #1a3a16 0%, #2d5a27 100%);
+    border-radius: 6px;
+    padding: 16px 20px;
+    color: white;
+  }
+
+  .deliverable-box-title {
+    font-size: 10px;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 8px;
+  }
+
+  .deliverable-box-content {
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.9);
+  }
+
+  .panel-btn-complete {
+    width: 100%;
+    padding: 12px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'Noto Sans SC', sans-serif;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: all 0.2s;
+  }
+
+  .panel-btn-complete:hover { background: #234d1e; }
+  .panel-btn-complete.already-done { background: var(--complete); cursor: pointer; }
+  .panel-btn-complete.already-done:hover { background: #a03020; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .header { padding: 40px 24px 32px; }
+    .progress-section { padding: 16px 24px; }
+    .main { padding: 32px 24px 60px; }
+    .step-header { padding: 16px 18px; gap: 12px; }
+    .panel-body { padding: 20px 18px 24px 18px; }
+    .btn-guide { display: none; }
+  }
+
+  /* ── COMPLETION STATE ── */
+  .all-done-banner {
+    display: none;
+    margin-top: 32px;
+    padding: 28px 32px;
+    background: linear-gradient(135deg, #1a3a16 0%, #2d5a27 100%);
+    border-radius: 6px;
+    color: white;
+    text-align: center;
+  }
+  .all-done-banner.visible { display: block; animation: fadeIn 0.4s ease; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .all-done-banner h3 { font-size: 22px; font-weight: 900; margin-bottom: 8px; }
+  .all-done-banner p { font-size: 14px; color: rgba(255,255,255,0.7); }
+
+  .expand-icon {
+    color: var(--text-dim);
+    font-size: 20px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    user-select: none;
+    display: inline-block;
+  }
+  .step-card.open .expand-icon { transform: rotate(90deg); }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-tag">EDITOR ONBOARDING · 2026</div>
+  <h1>竹笋大会 2026<br><span>剪辑 SOP</span></h1>
+  <p class="header-sub">四位剪辑的完整操作指南 · 请按步骤逐项完成并勾选</p>
+  <div class="header-meta">
+    <div class="meta-item">
+      <span class="meta-label">工具</span>
+      <span class="meta-value">剪映团队版</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">导出规格</span>
+      <span class="meta-value">1080P · 竖屏 9:16</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">时长上限</span>
+      <span class="meta-value">时长 ≤10 分钟</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">交付节奏</span>
+      <span class="meta-value">每人每周 2 期</span>
+    </div>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-section">
+  <div class="progress-header">
+    <div class="progress-left">
+      <span class="progress-label">本期完成进度</span>
+      <button class="btn-reset" onclick="resetAll()">↺ 一键重置</button>
+    </div>
+    <span class="progress-count" id="progressCount">0 / 5 步骤</span>
+  </div>
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressBar"></div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- 交付物说明 -->
+  <div class="section-intro">
+    <h2>交付物规范</h2>
+    <p>每期视频剪辑完成后，按以下规范命名并分享给Helen review。片尾由Helen review 后统一添加，<strong>剪辑阶段不需要处理片尾</strong>。</p>
+    <div class="deliverable-chips">
+      <span class="chip chip-green">命名：竹笋+嘉宾名</span>
+      <span class="chip chip-green">1080P 竖屏 9:16</span>
+      <span class="chip chip-gold">时长 ≤10 分钟</span>
+      <span class="chip chip-red">剪完后将草稿链接发给Helen</span>
+    </div>
+  </div>
+
+  <!-- STEPS -->
+  <div class="steps-container" id="stepsContainer">
+
+    <!-- STEP 1 -->
+    <div class="step-card" id="step-1">
+      <div class="step-header" onclick="toggleStep(1)">
+        <div class="step-checkbox" onclick="toggleComplete(1, event)"><span class="checkmark">✓</span></div>
+        <div class="step-number">01</div>
+        <div class="step-content">
+          <div class="step-title">粗剪 — 智能剪口播</div>
+          <div class="step-subtitle">用逐字稿删减内容 · 新建复合片段</div>
+        </div>
+        <div class="step-actions">
+          <span class="expand-icon">›</span>
+        </div>
+      </div>
+      <div class="step-panel" id="panel-1"></div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step-card" id="step-2">
+      <div class="step-header" onclick="toggleStep(2)">
+        <div class="step-checkbox" onclick="toggleComplete(2, event)"><span class="checkmark">✓</span></div>
+        <div class="step-number">02</div>
+        <div class="step-content">
+          <div class="step-title">字幕生成与校对</div>
+          <div class="step-subtitle">团队版直接识别 · 调用品牌预设 · 音画同步</div>
+        </div>
+        <div class="step-actions">
+          <span class="expand-icon">›</span>
+        </div>
+      </div>
+      <div class="step-panel" id="panel-2"></div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step-card" id="step-3">
+      <div class="step-header" onclick="toggleStep(3)">
+        <div class="step-checkbox" onclick="toggleComplete(3, event)"><span class="checkmark">✓</span></div>
+        <div class="step-number">03</div>
+        <div class="step-content">
+          <div class="step-title">时长校对 + 关键词高亮</div>
+          <div class="step-subtitle">确认时长达标 · 标记重点内容</div>
+        </div>
+        <div class="step-actions">
+          <span class="expand-icon">›</span>
+        </div>
+      </div>
+      <div class="step-panel" id="panel-3"></div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="step-card" id="step-4">
+      <div class="step-header" onclick="toggleStep(4)">
+        <div class="step-checkbox" onclick="toggleComplete(4, event)"><span class="checkmark">✓</span></div>
+        <div class="step-number">04</div>
+        <div class="step-content">
+          <div class="step-title">品牌元素添加</div>
+          <div class="step-subtitle">竹笋公司 Logo · Title · 知识卡片</div>
+        </div>
+        <div class="step-actions">
+          <span class="expand-icon">›</span>
+        </div>
+      </div>
+      <div class="step-panel" id="panel-4"></div>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="step-card" id="step-5">
+      <div class="step-header" onclick="toggleStep(5)">
+        <div class="step-checkbox" onclick="toggleComplete(5, event)"><span class="checkmark">✓</span></div>
+        <div class="step-number">05</div>
+        <div class="step-content">
+          <div class="step-title">提交 Review</div>
+          <div class="step-subtitle">将草稿链接发给Helen · 等待 Review</div>
+        </div>
+        <div class="step-actions">
+          <span class="expand-icon">›</span>
+        </div>
+      </div>
+      <div class="step-panel" id="panel-5"></div>
+    </div>
+
+  </div>
+
+  <!-- ALL DONE BANNER -->
+  <div class="all-done-banner" id="allDoneBanner">
+    <h3>🎋 本期视频完成！</h3>
+    <p>所有步骤已完成，请将草稿分享给Helen review。<br>下一期可重置页面重新使用。</p>
+    <button onclick="resetAll()" style="margin-top:16px; padding:10px 24px; background:rgba(255,255,255,0.15); color:white; border:1px solid rgba(255,255,255,0.3); border-radius:4px; cursor:pointer; font-family:'Noto Sans SC'; font-size:13px;">重置 · 开始下一期</button>
+  </div>
+
+</div>
+
+<script>
+const TOTAL = 5;
+const openPanels = new Set();
+
+// ── localStorage persistence ──
+const STORAGE_KEY = 'zhusun2026_completed';
+function loadCompleted() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? new Set(JSON.parse(saved)) : new Set();
+  } catch { return new Set(); }
+}
+function saveCompleted() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify([...completed])); } catch {}
+}
+const completed = loadCompleted();
+
+// restore UI on load
+window.addEventListener('DOMContentLoaded', () => {
+  completed.forEach(stepNum => {
+    const card = document.getElementById(`step-${stepNum}`);
+    if (card) card.classList.add('completed');
+  });
+  updateProgress();
+});
+
+const modalData = {
+  1: {
+    stepTag: 'Step 01 · 粗剪',
+    title: '智能剪口播 + 新建复合片段',
+    steps: [
+      '在剪映团队库中下载你负责的原始素材',
+      '点击素材视频，在右侧功能区找到「智能剪口播」，点击后等待生成逐字稿',
+      '在逐字稿文本区域直接删除不需要的内容（水词、重复、冷场段落），视频片段自动对应删除',
+      '删减完毕后，Ctrl+A 全选所有片段 → 右键「新建复合片段」，碎片合并为一个整体',
+    ],
+    warnings: [
+      '删除内容时注意语义连贯性，不能让上下文断意或跳跃感明显',
+      '水词（嗯、啊、那个、就是……等口头禅）全部删除，不留',
+      '如不确定某段是否要删，可先保留，精剪阶段再处理',
+    ],
+    tips: [
+      '可以参考品牌库里Helen放的成品草稿，了解剪辑节奏和风格基准',
+    ],
+    deliverable: '完成后：一条完整的复合片段，水词已清除，上下文语义流畅',
+  },
+  2: {
+    stepTag: 'Step 02 · 字幕',
+    title: '字幕生成、格式校对与音画同步',
+    steps: [
+      '开始前先打开安全区显示（预览区右上角），确认字幕始终在外部白框可视范围内',
+      '团队版已包含 SVIP 权限，直接在剪映中操作字幕识别即可；如遇到权限异常，联系Helen处理',
+      '识别完成后，进入字幕编辑面板，在品牌库中调用普通字幕预设，参数：字体得意黑、字号9、背景开启（不透明度25%、圆角30%）、阴影开启（不透明度70%、模糊度15%、距离5）',
+      '逐条校对字幕：去除水词、检查错别字及专有名词（公司名、人名、专业术语）',
+      '检查音画同步：字幕显示时间必须与说话内容严格对齐，不能提前或滞后',
+      '如一句完整的句子超出安全区需分为两行：分行前务必先关闭「文本/排列/气泡/花字应用到全部字幕」功能，再单独操作该条字幕，第一行 Y轴 -1707，第二行 Y轴 -2140',
+      '如视频含竹笋判词字幕，另调用判词预设（字体：研宋体），根据竹子老师说话节奏逐行出现',
+    ],
+    warnings: [
+      '每次开始字幕操作前确认安全区已开启，字幕不能超出外部白框',
+      '分行操作前必须先关闭「文本/排列/气泡/花字应用到全部字幕」，否则会改动所有字幕格式',
+      '不要在字幕里保留任何水词（嗯、啊、那个），粗剪已删但识别偶尔仍会保留',
+      '分行参数严格按 Y轴 -1707（第一行）/ -2140（第二行），不要随意调整',
+      '专有名词（公司名、嘉宾姓名、专业术语）请仔细核对，AI 识别常出错',
+    ],
+    tips: [
+      '字幕预设参数速查：得意黑 · 9号 · 背景25%不透明/圆角30% · 阴影70%不透明/模糊15/距离5',
+      '字幕预设直接在品牌库下载应用，也可在样本草稿中复制对应字幕格式',
+      '边听边校对效率最高，一定要配合音频检查同步，不要只看文字',
+    ],
+    deliverable: '完成后：全部字幕格式统一（预设参数正确）、音画同步、无错别字、无水词、超长句已正确分两行、安全区内无裁切',
+  },
+  3: {
+    stepTag: 'Step 03 · 时长校对 + 高亮',
+    title: '确认时长达标 + 关键词高亮',
+    steps: [
+      '查看时间轴总时长：所有内容统一 ≤10 分钟',
+      '如超时，回到字幕逐字稿继续删减，优先删除冗余过渡语、重复表达',
+      '再次检查字幕有无遗留错误（结合步骤 2 一并确认）',
+      '在你认为重要的关键词（核心观点、数据、人名/公司名等）处，调用品牌库关键词高亮预设添加高亮效果',
+    ],
+    warnings: [
+      '时长压缩时仍要保证语义连贯，不能为了压时长而让内容断裂',
+    ],
+    tips: [
+      '关键词高亮标准由你自己判断，觉得重要就加，无硬性规则',
+      '高亮预设在品牌库里，样式已统一设置好，直接调用即可',
+    ],
+    deliverable: '完成后：视频时长达标，关键词已高亮标注，字幕二次确认无误',
+  },
+  4: {
+    stepTag: 'Step 04 · 品牌元素',
+    title: '竹笋公司 Logo + Title + 知识卡片',
+    steps: [
+      '从剪映团队素材库下载竹笋公司 Logo，添加到视频合适位置',
+      '添加竹笋 Title：在品牌库调用竹笋 title 字幕预设（字体：新青年体），上下位置与 Logo 上下尽量对齐，可根据内容调整字体大小和行间距',
+      '在内容合理处插入知识卡片（素材在团队库中），卡片出现时机要与内容匹配',
+      '整体预览一遍，检查 Logo、Title、知识卡片位置是否协调、无遮挡字幕',
+    ],
+    warnings: [
+      '所有品牌素材统一从品牌库/团队素材库获取，不要自己另找',
+      '知识卡片的出现位置要与说话内容对应，不要随意插入',
+      'Title 字体必须用新青年体（品牌预设中已配置），不要更改',
+    ],
+    tips: [
+      '不确定品牌元素放哪里，可以参考品牌库里Helen放的成品草稿',
+      '片尾不需要你添加，Helen review 后统一处理',
+    ],
+    deliverable: '完成后：竹笋公司 Logo、Title、知识卡片均已添加，整体视觉一致，预览无异常',
+  },
+  5: {
+    stepTag: 'Step 05 · 提交',
+    title: '分享草稿给Helen Review',
+    steps: [
+      '最终预览完整视频一遍，确认所有前四步均已完成',
+      '在剪映中点击「分享」，上传到纽约竹子小组，生成链接',
+      '将链接发给Helen',
+      '等待Helen review 反馈',
+      '如有修改意见，按反馈进行修改后重新分享',
+    ],
+    warnings: [
+      '提交前务必自查：字幕 ✓ 时长 ✓ 品牌元素 ✓ 命名格式（竹笋+嘉宾名）✓',
+      '片尾不需要你处理，Helen会在 review 后统一添加',
+    ],
+    tips: [
+      '如遇到剪映 SVIP 权限问题、素材找不到、不确定剪辑判断，随时联系Helen',
+    ],
+    deliverable: '最终交付：链接已发给Helen，命名格式正确（竹笋+嘉宾名），等待 review 通过后本期完成',
+  },
+};
+
+function buildPanelHTML(stepNum) {
+  const d = modalData[stepNum];
+  const isDone = completed.has(stepNum);
+  const stepsHtml = d.steps.map((s, i) => `<li data-n="${i+1}">${s}</li>`).join('');
+  const warningsHtml = d.warnings.map(w => `<li>${w}</li>`).join('');
+  const tipsHtml = d.tips ? d.tips.map(t => `<li>${t}</li>`).join('') : '';
+  return `
+    <div class="panel-body">
+      <div>
+        <div class="panel-section-title">操作步骤</div>
+        <ul class="modal-steps-list">${stepsHtml}</ul>
+      </div>
+      <div>
+        <div class="panel-section-title">注意事项</div>
+        <ul class="warning-list">${warningsHtml}</ul>
+      </div>
+      ${tipsHtml ? `<div>
+        <div class="panel-section-title">小贴士</div>
+        <ul class="tip-list">${tipsHtml}</ul>
+      </div>` : ''}
+      <div>
+        <div class="panel-section-title">交付预期</div>
+        <div class="deliverable-box">
+          <div class="deliverable-box-title">✓ 完成标准</div>
+          <div class="deliverable-box-content">${d.deliverable}</div>
+        </div>
+      </div>
+      <button class="panel-btn-complete ${isDone ? 'already-done' : ''}" id="btn-complete-${stepNum}" onclick="toggleComplete(${stepNum}, event)">
+        ${isDone ? '✓ 已完成（点击取消）' : '✓ 标记本步骤完成'}
+      </button>
+    </div>
+  `;
+}
+
+function toggleStep(stepNum) {
+  const card = document.getElementById(`step-${stepNum}`);
+  const panel = document.getElementById(`panel-${stepNum}`);
+  const isOpen = openPanels.has(stepNum);
+
+  if (isOpen) {
+    openPanels.delete(stepNum);
+    card.classList.remove('open');
+    panel.classList.remove('open');
+  } else {
+    openPanels.add(stepNum);
+    card.classList.add('open');
+    panel.innerHTML = buildPanelHTML(stepNum);
+    panel.classList.add('open');
+  }
+}
+
+function toggleComplete(stepNum, e) {
+  if (e) e.stopPropagation();
+  const card = document.getElementById(`step-${stepNum}`);
+  if (completed.has(stepNum)) {
+    completed.delete(stepNum);
+    card.classList.remove('completed');
+    const btn = document.getElementById(`btn-complete-${stepNum}`);
+    if (btn) { btn.textContent = '✓ 标记本步骤完成'; btn.classList.remove('already-done'); }
+  } else {
+    completed.add(stepNum);
+    card.classList.add('completed');
+    const btn = document.getElementById(`btn-complete-${stepNum}`);
+    if (btn) { btn.textContent = '✓ 已完成（点击取消）'; btn.classList.add('already-done'); }
+  }
+  saveCompleted();
+  updateProgress();
+}
+
+function updateProgress() {
+  const count = completed.size;
+  document.getElementById('progressCount').textContent = `${count} / ${TOTAL} 步骤`;
+  document.getElementById('progressBar').style.width = `${(count / TOTAL) * 100}%`;
+  if (count === TOTAL) document.getElementById('allDoneBanner').classList.add('visible');
+}
+
+function resetAll() {
+  completed.clear();
+  openPanels.clear();
+  for (let i = 1; i <= TOTAL; i++) {
+    const card = document.getElementById(`step-${i}`);
+    const panel = document.getElementById(`panel-${i}`);
+    card.classList.remove('completed', 'open');
+    panel.classList.remove('open');
+  }
+  document.getElementById('allDoneBanner').classList.remove('visible');
+  saveCompleted();
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
