@@ -399,7 +399,7 @@
   }
 
   .step-panel.open {
-    max-height: 1200px;
+    max-height: 3000px;
     opacity: 1;
     border-top: 1px solid var(--border);
   }
@@ -543,6 +543,54 @@
   .panel-btn-complete:hover { background: #234d1e; }
   .panel-btn-complete.already-done { background: var(--complete); cursor: pointer; }
   .panel-btn-complete.already-done:hover { background: #a03020; }
+
+  /* ── PARAMS BLOCK ── */
+  .params-block {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .params-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  .param-item {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+  }
+
+  .param-item:nth-child(even) { border-right: none; }
+  .param-item:nth-last-child(-n+2) { border-bottom: none; }
+  .param-item:last-child:nth-child(odd) {
+    grid-column: span 2;
+    border-right: none;
+  }
+
+  .param-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+  }
+
+  .param-value {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .param-value span {
+    font-weight: 400;
+    color: var(--text-muted);
+    font-size: 12px;
+  }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 640px) {
@@ -787,7 +835,7 @@ const modalData = {
       '如不确定某段是否要删，可先保留，精剪阶段再处理',
     ],
     tips: [
-      '可以参考品牌库里Helen放的成品草稿，了解剪辑节奏和风格基准',
+      '剪辑风格可参考纽约竹子最新发布的「竹笋故事」视频 Estella 一期',
       '粗剪阶段在原始横屏状态下操作即可，下一步再调整竖屏',
     ],
     deliverable: '完成后：一条完整的复合片段，水词已清除，上下文语义流畅',
@@ -819,11 +867,22 @@ const modalData = {
     steps: [
       '确认安全区显示已开启（上一步已打开），字幕始终在外部白框可视范围内',
       '团队版已包含 SVIP 权限，直接在剪映中操作字幕识别即可；如遇到权限异常，联系Helen处理',
-      '识别完成后，进入字幕编辑面板，在品牌库中调用普通字幕预设，参数：字体得意黑、字号9、背景开启（不透明度25%、圆角30%）、阴影开启（不透明度70%、模糊度15%、距离5）',
+      '识别完成后，进入字幕编辑面板，在品牌库中调用普通字幕预设，按右侧参数核对设置',
       '逐条校对字幕：去除水词、检查错别字及专有名词（公司名、人名、专业术语）',
       '检查音画同步：字幕显示时间必须与说话内容严格对齐，不能提前或滞后',
       '如一句完整的句子超出安全区需分为两行：分行前务必先关闭「文本/排列/气泡/花字应用到全部字幕」功能，再单独操作该条字幕，第一行 Y轴 -1707，第二行 Y轴 -2140',
       '如视频含竹笋判词字幕，另调用判词预设（字体：研宋体），根据竹子老师说话节奏逐行出现',
+    ],
+    params: [
+      { label: '字体', value: '得意黑' },
+      { label: '字号', value: '9' },
+      { label: '背景不透明度', value: '25%' },
+      { label: '背景圆角', value: '30%' },
+      { label: '阴影不透明度', value: '70%' },
+      { label: '阴影模糊度', value: '15%' },
+      { label: '阴影距离', value: '5' },
+      { label: '分行 Y轴（第一行）', value: '-1707' },
+      { label: '分行 Y轴（第二行）', value: '-2140' },
     ],
     warnings: [
       '每次开始字幕操作前确认安全区已开启，字幕不能超出外部白框',
@@ -834,7 +893,7 @@ const modalData = {
     ],
     tips: [
       '字幕预设参数速查：得意黑 · 9号 · 背景25%不透明/圆角30% · 阴影70%不透明/模糊15/距离5',
-      '字幕预设直接在品牌库下载应用，也可在样本草稿中复制对应字幕格式',
+      '字幕预设直接在品牌库下载应用即可',
       '边听边校对效率最高，一定要配合音频检查同步，不要只看文字',
     ],
     deliverable: '完成后：全部字幕格式统一（预设参数正确）、音画同步、无错别字、无水词、超长句已正确分两行、安全区内无裁切',
@@ -846,14 +905,13 @@ const modalData = {
       '查看时间轴总时长：所有内容统一 ≤10 分钟',
       '如超时，回到字幕逐字稿继续删减，优先删除冗余过渡语、重复表达',
       '再次检查字幕有无遗留错误（结合步骤 3 一并确认）',
-      '在你认为重要的关键词（核心观点、数据、人名/公司名等）处，调用品牌库关键词高亮预设添加高亮效果',
+      '在你认为重要的关键词（核心观点、数据、人名/公司名等）处，直接使用划关键词功能添加高亮效果',
     ],
     warnings: [
       '时长压缩时仍要保证语义连贯，不能为了压时长而让内容断裂',
     ],
     tips: [
       '关键词高亮标准由你自己判断，觉得重要就加，无硬性规则',
-      '高亮预设在品牌库里，样式已统一设置好，直接调用即可',
     ],
     deliverable: '完成后：视频时长达标，关键词已高亮标注，字幕二次确认无误',
   },
@@ -873,7 +931,7 @@ const modalData = {
       'Title 字体必须用新青年体（品牌预设中已配置），不要更改',
     ],
     tips: [
-      '不确定品牌元素放哪里，可以参考品牌库里Helen放的成品草稿',
+      '不确定品牌元素放哪里，可参考纽约竹子最新发布的「竹笋故事」视频 Estella 一期',
       '片尾不需要你添加，Helen review 后统一处理',
     ],
     deliverable: '完成后：竹笋公司 Logo、Title、公司科普卡片均已添加，整体视觉一致，预览无异常',
@@ -905,12 +963,27 @@ function buildPanelHTML(stepNum) {
   const stepsHtml = d.steps.map((s, i) => `<li data-n="${i+1}">${s}</li>`).join('');
   const warningsHtml = d.warnings.map(w => `<li>${w}</li>`).join('');
   const tipsHtml = d.tips ? d.tips.map(t => `<li>${t}</li>`).join('') : '';
+  const paramsHtml = d.params ? `
+    <div>
+      <div class="panel-section-title">字幕预设参数</div>
+      <div class="params-block">
+        <div class="params-grid">
+          ${d.params.map(p => `
+            <div class="param-item">
+              <div class="param-label">${p.label}</div>
+              <div class="param-value">${p.value}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>` : '';
   return `
     <div class="panel-body">
       <div>
         <div class="panel-section-title">操作步骤</div>
         <ul class="modal-steps-list">${stepsHtml}</ul>
       </div>
+      ${paramsHtml}
       <div>
         <div class="panel-section-title">注意事项</div>
         <ul class="warning-list">${warningsHtml}</ul>
