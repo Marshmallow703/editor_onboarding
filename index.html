@@ -613,7 +613,7 @@
       <span class="progress-label">本期完成进度</span>
       <button class="btn-reset" onclick="resetAll()">↺ 一键重置</button>
     </div>
-    <span class="progress-count" id="progressCount">0 / 5 步骤</span>
+    <span class="progress-count" id="progressCount">0 / 6 步骤</span>
   </div>
   <div class="progress-bar-bg">
     <div class="progress-bar-fill" id="progressBar"></div>
@@ -660,8 +660,8 @@
         <div class="step-checkbox" onclick="toggleComplete(2, event)"><span class="checkmark">✓</span></div>
         <div class="step-number">02</div>
         <div class="step-content">
-          <div class="step-title">字幕生成与校对</div>
-          <div class="step-subtitle">团队版直接识别 · 调用品牌预设 · 音画同步</div>
+          <div class="step-title">添加背景图 · 调整竖屏</div>
+          <div class="step-subtitle">从 Google Drive 下载背景图 · 设置画面比例</div>
         </div>
         <div class="step-actions">
           <span class="expand-icon">›</span>
@@ -676,8 +676,8 @@
         <div class="step-checkbox" onclick="toggleComplete(3, event)"><span class="checkmark">✓</span></div>
         <div class="step-number">03</div>
         <div class="step-content">
-          <div class="step-title">时长校对 + 关键词高亮</div>
-          <div class="step-subtitle">确认时长达标 · 标记重点内容</div>
+          <div class="step-title">字幕生成与校对</div>
+          <div class="step-subtitle">团队版直接识别 · 调用品牌预设 · 音画同步</div>
         </div>
         <div class="step-actions">
           <span class="expand-icon">›</span>
@@ -692,8 +692,8 @@
         <div class="step-checkbox" onclick="toggleComplete(4, event)"><span class="checkmark">✓</span></div>
         <div class="step-number">04</div>
         <div class="step-content">
-          <div class="step-title">品牌元素添加</div>
-          <div class="step-subtitle">竹笋公司 Logo · Title · 知识卡片</div>
+          <div class="step-title">时长校对 + 关键词高亮</div>
+          <div class="step-subtitle">确认时长达标 · 标记重点内容</div>
         </div>
         <div class="step-actions">
           <span class="expand-icon">›</span>
@@ -708,6 +708,22 @@
         <div class="step-checkbox" onclick="toggleComplete(5, event)"><span class="checkmark">✓</span></div>
         <div class="step-number">05</div>
         <div class="step-content">
+          <div class="step-title">品牌元素添加</div>
+          <div class="step-subtitle">竹笋公司 Logo · 科普卡片 · Title</div>
+        </div>
+        <div class="step-actions">
+          <span class="expand-icon">›</span>
+        </div>
+      </div>
+      <div class="step-panel" id="panel-5"></div>
+    </div>
+
+    <!-- STEP 6 -->
+    <div class="step-card" id="step-6">
+      <div class="step-header" onclick="toggleStep(6)">
+        <div class="step-checkbox" onclick="toggleComplete(6, event)"><span class="checkmark">✓</span></div>
+        <div class="step-number">06</div>
+        <div class="step-content">
           <div class="step-title">提交 Review</div>
           <div class="step-subtitle">将草稿链接发给Helen · 等待 Review</div>
         </div>
@@ -715,7 +731,7 @@
           <span class="expand-icon">›</span>
         </div>
       </div>
-      <div class="step-panel" id="panel-5"></div>
+      <div class="step-panel" id="panel-6"></div>
     </div>
 
   </div>
@@ -730,7 +746,7 @@
 </div>
 
 <script>
-const TOTAL = 5;
+const TOTAL = 6;
 const openPanels = new Set();
 
 // ── localStorage persistence ──
@@ -760,7 +776,7 @@ const modalData = {
     stepTag: 'Step 01 · 粗剪',
     title: '智能剪口播 + 新建复合片段',
     steps: [
-      '在剪映团队库中下载你负责的原始素材',
+      '在剪映「纽约竹子」小组中下载你负责的原始素材',
       '点击素材视频，在右侧功能区找到「智能剪口播」，点击后等待生成逐字稿',
       '在逐字稿文本区域直接删除不需要的内容（水词、重复、冷场段落），视频片段自动对应删除',
       '删减完毕后，Ctrl+A 全选所有片段 → 右键「新建复合片段」，碎片合并为一个整体',
@@ -772,14 +788,36 @@ const modalData = {
     ],
     tips: [
       '可以参考品牌库里Helen放的成品草稿，了解剪辑节奏和风格基准',
+      '粗剪阶段在原始横屏状态下操作即可，下一步再调整竖屏',
     ],
     deliverable: '完成后：一条完整的复合片段，水词已清除，上下文语义流畅',
   },
   2: {
-    stepTag: 'Step 02 · 字幕',
+    stepTag: 'Step 02 · 背景图 & 竖屏',
+    title: '添加背景图 · 调整竖屏比例',
+    steps: [
+      '从 Google Drive 下载背景图素材',
+      '在剪映中将画面比例设置为 9:16 竖屏',
+      '打开安全区显示（预览区右上角），后续所有操作确保画面不超出最外面的白框',
+      '将背景图添加到时间轴底层，铺满全屏',
+      '将合并后的原始素材视频居中放置，确保主体人物在安全区内显示正常',
+      '预览整体画面，确认背景图与视频画面衔接自然、无穿帮',
+    ],
+    warnings: [
+      '背景图必须从 Google Drive 统一素材包获取，不要自行替换',
+      '安全区打开后，画面内容（人物、字幕）均不能超出最外面的白框',
+      '原始素材居中放置，不要偏移',
+    ],
+    tips: [
+      '安全区在这一步打开后保持开启，字幕操作阶段同样需要用到',
+    ],
+    deliverable: '完成后：画面已设置为 9:16 竖屏，背景图已添加，安全区已开启，原始素材居中显示正常',
+  },
+  3: {
+    stepTag: 'Step 03 · 字幕',
     title: '字幕生成、格式校对与音画同步',
     steps: [
-      '开始前先打开安全区显示（预览区右上角），确认字幕始终在外部白框可视范围内',
+      '确认安全区显示已开启（上一步已打开），字幕始终在外部白框可视范围内',
       '团队版已包含 SVIP 权限，直接在剪映中操作字幕识别即可；如遇到权限异常，联系Helen处理',
       '识别完成后，进入字幕编辑面板，在品牌库中调用普通字幕预设，参数：字体得意黑、字号9、背景开启（不透明度25%、圆角30%）、阴影开启（不透明度70%、模糊度15%、距离5）',
       '逐条校对字幕：去除水词、检查错别字及专有名词（公司名、人名、专业术语）',
@@ -801,13 +839,13 @@ const modalData = {
     ],
     deliverable: '完成后：全部字幕格式统一（预设参数正确）、音画同步、无错别字、无水词、超长句已正确分两行、安全区内无裁切',
   },
-  3: {
-    stepTag: 'Step 03 · 时长校对 + 高亮',
+  4: {
+    stepTag: 'Step 04 · 时长校对 + 高亮',
     title: '确认时长达标 + 关键词高亮',
     steps: [
       '查看时间轴总时长：所有内容统一 ≤10 分钟',
       '如超时，回到字幕逐字稿继续删减，优先删除冗余过渡语、重复表达',
-      '再次检查字幕有无遗留错误（结合步骤 2 一并确认）',
+      '再次检查字幕有无遗留错误（结合步骤 3 一并确认）',
       '在你认为重要的关键词（核心观点、数据、人名/公司名等）处，调用品牌库关键词高亮预设添加高亮效果',
     ],
     warnings: [
@@ -819,38 +857,39 @@ const modalData = {
     ],
     deliverable: '完成后：视频时长达标，关键词已高亮标注，字幕二次确认无误',
   },
-  4: {
-    stepTag: 'Step 04 · 品牌元素',
-    title: '竹笋公司 Logo + Title + 知识卡片',
+  5: {
+    stepTag: 'Step 05 · 品牌元素',
+    title: '竹笋公司 Logo + Title + 科普卡片',
     steps: [
-      '从剪映团队素材库下载竹笋公司 Logo，添加到视频合适位置',
+      '从 Google Drive 下载竹笋公司 Logo 和公司科普卡片素材',
+      '添加竹笋公司 Logo 到视频合适位置',
       '添加竹笋 Title：在品牌库调用竹笋 title 字幕预设（字体：新青年体），上下位置与 Logo 上下尽量对齐，可根据内容调整字体大小和行间距',
-      '在内容合理处插入知识卡片（素材在团队库中），卡片出现时机要与内容匹配',
-      '整体预览一遍，检查 Logo、Title、知识卡片位置是否协调、无遮挡字幕',
+      '在内容合理处插入公司科普卡片，卡片出现时机要与内容匹配',
+      '整体预览一遍，检查 Logo、Title、科普卡片位置是否协调、无遮挡字幕',
     ],
     warnings: [
-      '所有品牌素材统一从品牌库/团队素材库获取，不要自己另找',
-      '知识卡片的出现位置要与说话内容对应，不要随意插入',
+      '所有品牌素材统一从 Google Drive 获取，不要自己另找',
+      '科普卡片的出现位置要与说话内容对应，不要随意插入',
       'Title 字体必须用新青年体（品牌预设中已配置），不要更改',
     ],
     tips: [
       '不确定品牌元素放哪里，可以参考品牌库里Helen放的成品草稿',
       '片尾不需要你添加，Helen review 后统一处理',
     ],
-    deliverable: '完成后：竹笋公司 Logo、Title、知识卡片均已添加，整体视觉一致，预览无异常',
+    deliverable: '完成后：竹笋公司 Logo、Title、公司科普卡片均已添加，整体视觉一致，预览无异常',
   },
-  5: {
-    stepTag: 'Step 05 · 提交',
+  6: {
+    stepTag: 'Step 06 · 提交',
     title: '分享草稿给Helen Review',
     steps: [
-      '最终预览完整视频一遍，确认所有前四步均已完成',
+      '最终预览完整视频一遍，确认所有前五步均已完成',
       '在剪映中点击「分享」，上传到纽约竹子小组，生成链接',
       '将链接发给Helen',
       '等待Helen review 反馈',
       '如有修改意见，按反馈进行修改后重新分享',
     ],
     warnings: [
-      '提交前务必自查：字幕 ✓ 时长 ✓ 品牌元素 ✓ 命名格式（竹笋+嘉宾名）✓',
+      '提交前务必自查：竖屏背景图 ✓ 字幕 ✓ 时长 ✓ 品牌元素 ✓ 命名格式（竹笋+嘉宾名）✓',
       '片尾不需要你处理，Helen会在 review 后统一添加',
     ],
     tips: [
